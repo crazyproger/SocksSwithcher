@@ -1,13 +1,11 @@
 package net.crazyproger.plugins.socksswitcher;
 
-import com.intellij.openapi.components.ServiceManager;
+import com.intellij.openapi.application.ApplicationManager;
 import com.intellij.openapi.options.ConfigurationException;
 import com.intellij.openapi.options.SearchableConfigurable;
 import net.crazyproger.plugins.socksswitcher.ui.GlobalSettingsPanel;
 import org.jetbrains.annotations.Nls;
 import org.jetbrains.annotations.NotNull;
-
-import javax.swing.*;
 
 /**
  * User: crazyproger
@@ -16,7 +14,7 @@ import javax.swing.*;
 public class GlobalConfigConfigurable implements SearchableConfigurable {
 
     private GlobalSettingsPanel globalSettingsPanel;
-    private GlobalConfig configuration = ServiceManager.getService(GlobalConfig.class);
+    private GlobalConfig configuration = ApplicationManager.getApplication().getComponent(GlobalConfig.class);
 
     @NotNull
     @Override
@@ -45,7 +43,7 @@ public class GlobalConfigConfigurable implements SearchableConfigurable {
     @Override
     public void apply() throws ConfigurationException {
         globalSettingsPanel.getData(configuration);
-        // todo apply system properties
+        configuration.updateSocks();
     }
 
     @Override

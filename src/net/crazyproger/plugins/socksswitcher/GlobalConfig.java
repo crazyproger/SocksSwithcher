@@ -1,11 +1,8 @@
 package net.crazyproger.plugins.socksswitcher;
 
-import com.intellij.openapi.components.PersistentStateComponent;
-import com.intellij.openapi.components.State;
-import com.intellij.openapi.components.Storage;
-import com.intellij.openapi.components.StorageScheme;
 import com.intellij.util.xmlb.XmlSerializer;
 import org.jdom.Element;
+import org.jetbrains.annotations.NotNull;
 
 /**
  * User: crazyproger
@@ -15,10 +12,13 @@ import org.jdom.Element;
         name = "SocksSwitcher",
         storages = {@Storage(id = "other", file = "$APP_CONFIG$/other.xml", scheme = StorageScheme.DIRECTORY_BASED)})
 public class GlobalConfig
-        implements PersistentStateComponent<Element> {
+        implements PersistentStateComponent<Element>, ApplicationComponent {
+
+    public static final String SOCKS_HOST = "socksProxyHost";
+    public static final String SOCKS_PORT = "socksProxyPort";
 
     private String proxyHost = null;
-    private int proxyPort = 1080;
+    private String proxyPort = "1080";
     private boolean socksEnabled = false;
 
     public String getProxyHost() {
@@ -29,11 +29,11 @@ public class GlobalConfig
         this.proxyHost = proxyHost;
     }
 
-    public int getProxyPort() {
+    public String getProxyPort() {
         return proxyPort;
     }
 
-    public void setProxyPort(int proxyPort) {
+    public void setProxyPort(String proxyPort) {
         this.proxyPort = proxyPort;
     }
 
@@ -53,5 +53,31 @@ public class GlobalConfig
     @Override
     public void loadState(final Element state) {
         XmlSerializer.deserializeInto(this, state);
+    }
+
+    public void updateSocks() {
+        if (isSocksEnabled()) {
+            System.setProperty(SOCKS_HOST, getProxyHost());
+            System.setProperty(SOCKS_PORT, getProxyPort());
+        } else {
+            System.clearProperty(SOCKS_HOST);
+            System.clearProperty(SOCKS_PORT);
+        }
+    }
+
+    @Override
+    public void initComponent() {
+        updateSocks();
+    }
+
+    @NotNull
+    @Override
+    public String getComponentName() {
+        return "SocksSwitcher.GlobalConfig";
+    }
+
+    @Override
+    public void disposeComponent() {
+
     }
 }

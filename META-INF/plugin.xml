@@ -7,7 +7,9 @@
     <idea-version since-build="111.167"/>
 
     <application-components>
-        <!-- Add your application components here -->
+        <component>
+            <implementation-class>net.crazyproger.plugins.socksswitcher.GlobalConfig</implementation-class>
+        </component>
     </application-components>
 
     <project-components>
@@ -19,7 +21,6 @@
     </actions>
 
     <extensions defaultExtensionNs="com.intellij">
-        <applicationService serviceImplementation="net.crazyproger.plugins.socksswitcher.GlobalConfig"/>
         <applicationConfigurable instance="net.crazyproger.plugins.socksswitcher.GlobalConfigConfigurable"/>
     </extensions>
 </idea-plugin>
