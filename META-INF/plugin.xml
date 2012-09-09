@@ -34,6 +34,10 @@
 
     <actions>
         <!-- Add your actions here -->
+        <action id="EnableSocks" class="net.crazyproger.plugins.socksswitcher.action.EnableSocks" text="Enable SOCKS"
+                description="Enable SOCKS server"/>
+        <action id="DisableSocks" class="net.crazyproger.plugins.socksswitcher.action.DisableSocks" text="Disable SOCKS"
+                description="Disable SOCKS server"/>
     </actions>
 
     <extensions defaultExtensionNs="com.intellij">

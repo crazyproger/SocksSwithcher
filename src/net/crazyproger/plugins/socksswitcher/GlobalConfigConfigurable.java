@@ -82,11 +82,6 @@ public class GlobalConfigConfigurable implements SearchableConfigurable {
     }
 
     @Override
-    public Icon getIcon() {
-        return null;
-    }
-
-    @Override
     public Runnable enableSearch(String option) {
         return null;
     }

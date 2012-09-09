@@ -18,6 +18,8 @@ package net.crazyproger.plugins.socksswitcher;
 
 import com.intellij.openapi.components.*;
 import com.intellij.util.xmlb.XmlSerializer;
+import net.crazyproger.plugins.socksswitcher.action.DisableSocks;
+import net.crazyproger.plugins.socksswitcher.action.EnableSocks;
 import org.jdom.Element;
 import org.jetbrains.annotations.NotNull;
 
@@ -74,11 +76,9 @@ public class GlobalConfig
 
     public void updateSocks() {
         if (isSocksEnabled()) {
-            System.setProperty(SOCKS_HOST, getProxyHost());
-            System.setProperty(SOCKS_PORT, getProxyPort());
+            EnableSocks.enable();
         } else {
-            System.clearProperty(SOCKS_HOST);
-            System.clearProperty(SOCKS_PORT);
+            DisableSocks.disable();
         }
     }
 
